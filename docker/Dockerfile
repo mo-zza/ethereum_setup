@@ -1,26 +1,13 @@
-FROM ubuntu:20.04
+FROM ethereum/client-go
 
-RUN apt-get update
-RUN apt-get install -y wget curl
+ARG ACCOUNT_PASSWORD
 
-COPY ./update-golang /home/update-golang
-WORKDIR /home/update-golang/
-RUN ./update-golang.sh
+COPY genesis.json /tmp
 
-COPY ./go-ethereum /home/go-ethereum
-WORKDIR /home/go-ethereum/
+RUN geth init /tmp/genesis.json \
+    && rm -f ~/.ethereum/geth/nodekey \
+    && echo ${ACCOUNT_PASSWORD} > /tmp/password \
+    && geth account new --password /tmp/password \
+    && rm -f /tmp/password
 
-RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
-RUN apt-get install -y build-essential libgmp3-dev git
-
-# RUN wget -c https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
-# RUN export PATH=$PATH:/usr/local/go/bin
-# RUN source ~/.profile
-
-RUN git checkout refs/tags/v1.5.5
-RUN make geth
-RUN cp build/bin/geth /usr/local/bin/
-
-WORKDIR /home/DATA_STORE/
-COPY ./genesis.json /home/DATA_STORE
-RUN geth --datadir "/home/DATA_STORE" init /home/DATA_STORE/genesis.json
+ENTRYPOINT ["geth"]
