@@ -22,8 +22,6 @@ or
 |http rpc port|8545|number|
 
 ## reference link
-- [dokcer compose reference]
 - [ethereum client docker hub]
 
-[dokcer compose reference]: https://medium.com/scb-digital/running-a-private-ethereum-blockchain-using-docker-589c8e6a4fe8
 [ethereum client docker hub]: https://hub.docker.com/r/ethereum/client-go/
