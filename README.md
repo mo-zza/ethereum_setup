@@ -19,11 +19,6 @@ or
 > ./start.sh
 ```
 
-## port
-|name|port|type|
-|---|---|---|
-|http rpc port|8545|number|
-
 ## reference link
 - [ethereum client docker hub]
 
