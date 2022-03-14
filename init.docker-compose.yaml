@@ -1,24 +1,21 @@
-version: "3"
-
+version: '2'
 services:
-  geth:
+  init:
     image: ethereum/client-go
-    container_name: ethereum
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - "${NODE_PORT}:30303"
-      - "${NODE_PORT}:30303/udp"
-      - "${RPC_PORT}:8545"
-      - "${WEBSOCKET_PORT}:8546"
+    container_name: ethereum-init
+    command:
+      --nodekeyhex=${NODE_KEY}
+      --nodiscover
+      --ipcdisable
+      --networkid=${NETWORK_ID}
+      --netrestrict="172.16.254.0/28"
+      init /root/.ethereum/genesis.json
     volumes:
       - ./chaindata:/root/.ethereum
-    stop_signal: SIGINT
-    stop_grace_period: 2m
-    command: init /root/.ethereum/genesis.json
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "2m"
-        max-file: "10"
+
+networks:
+  priv-eth-net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.254.0/28

@@ -22,7 +22,9 @@
 INFO [03-14|02:00:59.943] Allocated cache and file handles
 INFO [03-14|02:01:00.259] Persisted trie from memory database      
 INFO [03-14|02:01:00.260] Successfully wrote genesis state     
-...    
+...
+
+> docker-compose -f init.docker-compose.yaml down
 ```
 ### Start ethereum node
 ```shell
