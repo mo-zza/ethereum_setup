@@ -11,14 +11,12 @@ services:
       - "${NODE_PORT}:30303"
       - "${NODE_PORT}:30303/udp"
       - "${RPC_PORT}:8545"
-      - "${PEER_PORT}:8546"
+      - "${WEBSOCKET_PORT}:8546"
     volumes:
       - ./chaindata:/root/.ethereum
     stop_signal: SIGINT
     stop_grace_period: 2m
-    command:
-      - init
-      - "/root/.ethereum/genesis.json"
+    command: init /root/.ethereum/genesis.json
     logging:
       driver: "json-file"
       options:

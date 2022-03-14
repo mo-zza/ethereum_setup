@@ -9,7 +9,7 @@ services:
       - "${NODE_PORT}:30303"
       - "${NODE_PORT}:30303/udp"
       - "${RPC_PORT}:8545"
-      - "${PEER_PORT}:8546"
+      - "${WEBSOCKET_PORT}:8546"
     volumes:
       - ./chaindata:/root/.ethereum
     stop_signal: SIGINT
@@ -28,9 +28,9 @@ services:
       - "eth,net,web3"
       - --graphql
       - --graphql.corsdomain=*
-      - --graphql.vhosts=* --syncmode "fast"
+      - --graphql.vhosts=*
       # Blockchain sync mode ("fast", "full", or "light")
-      # - --syncmode=light
+      - --syncmode=light
       # Blockchain garbage collection mode ("full", "archive") (default: "full")
       - --gcmode=archive
       # - --datadir
